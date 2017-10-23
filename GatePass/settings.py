@@ -137,6 +137,9 @@ STATICFILES_DIRS = [
     '/issue/static/',
     '/approve/static/'
 ]
-
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR,  'templates'),
+    'issue','approve'
+)
 
 

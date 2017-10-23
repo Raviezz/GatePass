@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+
 
 {% block container %}
     <form method="post" action="">
         {% csrf_token %}
-        <div class="form-group">
+
+        <div class="form-group" width="200px">
             <input class="form-control" type="text" name="studid">
         </div>
         <div class="form-group">
             <button class="btn btn-success" name="search">Search</button>
         </div>
+
         {% if student %}
             <lable>Student ID:</lable>{{ student.student_id }}<br/>
             <lable>Student Name:</lable>{{ student.name }}<br/>
