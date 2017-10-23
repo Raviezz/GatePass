@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -5,6 +7,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from GatePass.settings import COORDINATOR_GROUP, GUARD_GROUP
+from issue.models import *
 
 
 def login_view(request):
@@ -49,4 +52,36 @@ def goto_user_page(user):
 
 @login_required
 def home(request):
-    return HttpResponse("login successful<a href = '/logout'>")
+    template = 'issue/home.html'
+    context = {}
+
+    if request.method == 'POST':
+        if 'search' in request.POST:
+            try:
+
+                student_id = Student.objects.get(hallticket_no=request.POST.get('studid'))
+                request.session['student_id'] = student_id.hallticket_no
+                context['student'] = student_id
+            except:
+                context['error'] = "not found"
+
+        if 'submit' in request.POST:
+            #try:
+                outtime = datetime.now()
+                inTime = request.POST.get('inTime')
+                reason = request.POST.get('reason')
+                IssuePass.objects.create(issued_by=request.user, hallticket_no=Student.objects.get(hallticket_no=request.session.get('student_id')),
+                                         outTime=outtime
+                                         , inTime=inTime, reason=reason)
+            #except:
+                context['error'] = "wrong input"
+
+
+    all_issues=IssuePass.objects.all()
+    stud_list=[]
+    for s in all_issues:
+        if s not in IssueCancelled.objects.all():
+            stud_list.append(s)
+
+    context['all_students']=stud_list
+    return render(request, template, context)

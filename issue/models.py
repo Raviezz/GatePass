@@ -2,6 +2,7 @@
 from django.contrib.auth.models import User, Group
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from datetime import datetime
 
 
 # Create your models here.
@@ -60,9 +61,10 @@ class IssuePass(models.Model):
     hallticket_no = models.ForeignKey(Student, on_delete=models.CASCADE)
     outTime = models.DateTimeField()
     inTime = models.DateTimeField(null=True)
-
+    reason=models.TextField(null=True)
     def __str__(self):
         return str(self.hallticket_no)
+
 
 class IssueCancelled(models.Model):
     issue_id = models.ForeignKey(IssuePass, on_delete=models.CASCADE)
@@ -72,9 +74,9 @@ class IssueCancelled(models.Model):
 class ApprovePass(models.Model):
     issue_id = models.ForeignKey(IssuePass, on_delete=models.CASCADE)
     approved_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    real_outTime = models.DateTimeField()
+    real_outTime = models.DateTimeField(default=datetime.now())
 
 
 class InTimes(models.Model):
     approved_id = models.ForeignKey(ApprovePass, on_delete=models.CASCADE)
-    in_time = models.DateTimeField()
+    in_time = models.DateTimeField(default=datetime.now())

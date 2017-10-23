@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block container %}
+    <form method="post" action="">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" type="text" name="studid">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" name="search">Search</button>
+        </div>
+        {% if student %}
+            <lable>Student ID:</lable>{{ student.student_id }}<br/>
+            <lable>Student Name:</lable>{{ student.name }}<br/>
+            <lable>Father name:</lable>{{ student.father_name }}<br/>
+            <lable>Father phone:</lable>{{ student.father_phno }}<br/>
+
+            <input type="datetime-local" name="inTime"><br/>
+            <textarea name="reason">Reason</textarea>
+            <button class="btn btn-success" type="submit" name="submit">submit</button><br/>
+
+        {% endif %}
+    </form>
+
+
+    {% if all_students %}
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    <lable>Student ID:</lable>
+                </th>
+                <th>
+                    <lable>Student Name:</lable>
+                </th>
+                <th>
+                    <lable>Student Class:</lable>
+                </th>
+                <th>
+                    <lable>Issued by</lable>
+                </th>
+                <th>
+                    <lable>Intime</lable>
+                </th>
+                <th>
+                    <lable>Outtime</lable>
+                </th>
+                <th>
+                    <lable>reason</lable>
+                </th>
+            </tr>
+
+            </thead>
+            <tbody>
+            {% for student in  all_students %}
+                <tr>
+                    <td>
+                        {{ student.hallticket_no.hallticket_no }}</td>
+                    <td>{{ student.hallticket_no.name }}</td>
+                    <td>{{ student.hallticket_no.class_id }}</td>
+                    <td>{{ student.issued_by }}</td>
+                    <td>{{ student.outTime }}</td>
+                    <td>{{ student.inTime }}</td>
+                    <td>{{ student.reason }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+    {% endif %}
+    {{ error }}
+    <a href="{% url 'logout' %}">Logout</a>
+
+{% endblock %}

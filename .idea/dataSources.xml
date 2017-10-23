@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Gatepass@localhost" uuid="9dd7984e-f7fa-42c9-9cb6-5477f993b2d6">
+    <data-source source="LOCAL" name="gatepass@localhost" uuid="ccae356b-9a21-4778-aba7-2c661e158412">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/Gatepass</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/gatepass</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />

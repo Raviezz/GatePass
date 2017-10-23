@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block container %}
+
+   {% if all_students %}
+      <form method="post" action="">
+      {% csrf_token %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    <lable>Student ID:</lable>
+                </th>
+                <th>
+                    <lable>Student Name:</lable>
+                </th>
+                <th>
+                    <lable>Student Class:</lable>
+                </th>
+                <th>
+                    <lable>Issued by</lable>
+                </th>
+                <th>
+                    <lable>Intime</lable>
+                </th>
+                <th>
+                    <lable>Outtime</lable>
+                </th>
+                <th>
+                    <lable>reason</lable>
+                </th>
+            </tr>
+
+            </thead>
+            <tbody>
+            {% for student in  all_students %}
+                <tr>
+                    <td>
+                        {{ student.hallticket_no.hallticket_no }}</td>
+                    <td>{{ student.hallticket_no.name }}</td>
+                    <td>{{ student.hallticket_no.class_id }}</td>
+                    <td>{{ student.issued_by }}</td>
+                    <td>{{ student.outTime }}</td>
+                    <td>{{ student.inTime }}</td>
+                    <td>{{ student.reason }}
+                    </td>
+                    <td>
+
+                        {% if student.hallticket_no.hallticket_no in approved_students%}
+                            <button class="btn btn-danger" name="return" value="{{ student.issue_id }}">Return</button>
+
+                        {% else %}
+                        <button class="btn btn-success" name="approve" value="{{ student.issue_id }}">Approve</button>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+
+<hr>
+      <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    <lable>Student ID:</lable>
+                </th>
+                <th>
+                    <lable>Student Name:</lable>
+                </th>
+                <th>
+                    <lable>Student Class:</lable>
+                </th>
+                <th>
+                    <lable>Issued by</lable>
+                </th>
+                <th>
+                    <lable>Intime</lable>
+                </th>
+                <th>
+                    <lable>Outtime</lable>
+                </th>
+                <th>
+                    <lable>Approved By</lable>
+                </th>
+                <th>
+                    <lable>Real OutTime</lable>
+                </th>
+                  <th>
+                    <lable>Real InTime</lable>
+                </th>
+            </tr>
+
+            </thead>
+            <tbody>
+            {% for student in  history %}
+                <tr>
+                    <td>
+                        {{ student.approved_id.issue_id.hallticket_no.hallticket_no }}</td>
+                    <td>{{ student.approved_id.issue_id.hallticket_no.name }}</td>
+                    <td>{{ student.approved_id.issue_id.hallticket_no.class_id }}</td>
+                    <td>{{ student.approved_id.issue_id.issued_by }}</td>
+                    <td>{{ student.approved_id.issue_id.inTime }}</td>
+                    <td>{{ student.approved_id.issue_id.outTime }}</td>
+                    <td>{{ student.approved_id.approved_by }}</td>
+                     <td>{{ student.approved_id.real_outTime }}</td>
+                     <td>{{ student.in_time }}</td>
+
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+
+      </form>
+    {% endif %}
+    {{ error }}
+    <a href="{% url 'logout' %}">Logout</a>
+
+
+
+    
+{% endblock %}
